@@ -24,8 +24,7 @@ public class BaseTestClass {
 
     @AfterMethod
     public void pauseBetweenTests() throws InterruptedException {
-        frameSwitcher("default"); //повернення до дефолтного фрейму
-        Thread.sleep(200); // пауза перед виконанням наступного тесту
+        Thread.sleep(250); // пауза перед виконанням наступного тесту
     }
 
     @AfterClass
@@ -33,32 +32,17 @@ public class BaseTestClass {
         driver.quit();
     }
 
-    public void frameSwitcher(String framesName) {
+    public void frameSwitcher(String framesPath, String framesName) {
         switch (framesName) {
-            case "left": {
-                driver.switchTo().frame("frame-top");
-                driver.switchTo().frame("frame-left");
-                break;
-            }
-            case "middle": {
-                driver.switchTo().frame("frame-top");
-                driver.switchTo().frame("frame-middle");
-                break;
-            }
-            case "right": {
-                driver.switchTo().frame("frame-top");
-                driver.switchTo().frame("frame-right");
-                break;
-            }
-            case "bottom": {
-                driver.switchTo().frame("frame-bottom");
-                break;
-            }
-            case "default": {
+            case "LEFT", "MIDDLE", "RIGHT" -> {
                 driver.switchTo().defaultContent();
-                break;
+                driver.switchTo().frame("frame-top");
+                driver.switchTo().frame(framesPath);
             }
-
+            case "BOTTOM" -> {
+                driver.switchTo().defaultContent();
+                driver.switchTo().frame(framesPath);
+            }
         }
 
     }

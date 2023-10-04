@@ -9,40 +9,16 @@ public class Bolshakov_HW_10 extends BaseTestClass {
 
     @DataProvider
     public Object[][] frameNames() {
-        return new Object[][]{{"LEFT"}, {"MIDDLE"}, {"RIGHT"}, {"BOTTOM"}};
+        return new Object[][]{{"frame-left","LEFT"}, {"frame-middle","MIDDLE"}, {"frame-right","RIGHT"}, {"frame-bottom","BOTTOM"}};
     }
 
+    @Test(priority = 1, dataProvider = "frameNames")
+    public void checkTextInFrames(String framesPath, String framesName) {
 
-    @Test(priority = 1, dataProvider = "frameNames", testName = "Left frame")
-    public void frameLeft(String frameName) {
-
-        frameSwitcher("left");
-        String body = driver.findElement(By.xpath("//body")).getText();
-        Assert.assertEquals(body, frameName, "Can`t find frame with parameter " + frameName + ". ");
-    }
-
-    @Test(priority = 2, dataProvider = "frameNames", testName = "Middle frame")
-    public void frameMiddle(String frameName) {
-
-        frameSwitcher("middle");
-        String body = driver.findElement(By.xpath("//body")).getText();
-        //Assert.assertEquals(body, frameName);
-        Assert.assertEquals(body, frameName, "can`t find frame with parameter " + frameName + ". ");
-    }
-
-    @Test(priority = 3, dataProvider = "frameNames", testName = "Right frame")
-    public void frameRight(String frameName) {
-
-        frameSwitcher("right");
-        String body = driver.findElement(By.xpath("//body")).getText();
-        Assert.assertEquals(body, frameName, "can`t find frame with parameter " + frameName + ". ");
-    }
-
-    @Test(priority = 4, dataProvider = "frameNames", testName = "Bottom frame")
-    public void frameBottom(String frameName) {
-
-        frameSwitcher("bottom");
-        String body = driver.findElement(By.xpath("//body")).getText();
-        Assert.assertEquals(body, frameName, "can`t find frame with parameter " + frameName + ". ");
+        for (int i=0; i < frameNames().length; i++) {
+            frameSwitcher(framesPath, framesName);
+            String body = driver.findElement(By.xpath("//body")).getText();
+            Assert.assertEquals(body, framesName, "Can`t find frame with parameter " + framesName + ". ");
+        }
     }
 }
